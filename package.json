@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower install"
   },
   "bin": {
     "rest-api-doc-gui": "./bin/cli"
@@ -24,7 +25,10 @@
     "documentation",
     "generator"
   ],
-  "author": "Harish.K <harish2704@gmail.com>",
+  "author": {
+    "name": "Harish.K",
+    "email": "harish2704@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/harish2704/rest-api-doc-gui/issues"
