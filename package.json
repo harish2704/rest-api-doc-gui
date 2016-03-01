@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "electron-prebuilt": "^0.36.9",
+    "hjson": "^1.7.6",
     "jquery": "^2.2.1"
   },
   "devDependencies": {},
