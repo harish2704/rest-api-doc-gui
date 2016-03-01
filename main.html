@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./favicon.ico">
+
+    <title>Api Documentation</title>
+
+
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/monokai.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/prism/themes/prism-solarizedlight.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/app.css">
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="./preview.html" target="_blank" >Default</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./preview.html" target="_blank" >Default</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container-fluid" ng-app="MyApp" ng-controller="MainCtrl" hotkey="{ 'ctrl+s': save }" hotkey-allow-in="INPUT SELECT TEXTAREA"  >
+
+      <div class="col-md-6 pull-left"  style="height: 700px; overflow: auto;" >
+        <div class="bootstrap-iso">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <form class="form-horizontal" method="post">
+                  <div class="form-group ">
+                    <label class="control-label col-md-2" for="ib-method">
+                      Method
+                    </label>
+                    <div class="col-md-10">
+                      <select class="select form-control" id="ib-method" ng-model="currentItem.method" >
+                        <option value="{{::METHOD}}" ng-repeat="METHOD in ::API_METHODS" >
+                        {{::METHOD}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <label class="control-label col-md-2" for="ib-action">
+                      Action
+                    </label>
+                    <div class="col-md-10">
+                      <input class="form-control" id="ib-action"  type="text" ng-model="currentItem.action" />
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <label class="control-label col-md-2" for="ib-action">
+                      Description
+                    </label>
+                    <div class="col-md-10">
+                      <textarea class="form-control" ng-model="currentItem.description" > </textarea>
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <label class="control-label col-md-2" for="ib-query">
+                      Query
+                      <br />
+                      <a href="" class="" ng-click="addParam()" >
+                        <i style="color: #04B000" class="glyphicon glyphicon-plus"> </i>
+                      </a>
+                    </label>
+                    <div class="col-md-10" >
+                      <div class="col-sm-12 param-group" ng-repeat="qParam in currentItem.query" >
+                        <div class="col-md-3">
+                        <input class="form-control" type="text" ng-model="qParam.name" />
+                        <input class="form-control" type="text" ng-model="qParam.type" />
+                        </div>
+                        <div class="col-md-8">
+                          <textarea class="form-control" rows="2" cols="20" ng-model="qParam.description" >{{qParam.description}}</textarea>
+                        </div>
+                        <a href="" class="" ng-click="removeParam(qParam)" >
+                          <i style="color: #d9534f" class="glyphicon glyphicon-minus pull-right"> </i>
+                        </a>
+                        <a class="pull-right arrow-up " href="" ng-click="reOrderArr(currentItem.query, qParam, -1); "><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a class="pull-right arrow-down " href="" ng-click="reOrderArr(currentItem.query, qParam, 1); "><i class="glyphicon glyphicon-arrow-down"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <label class="control-label col-md-2" for="ib-query">
+                      Body
+                      <br />
+                      <a href="#" class="" ng-click="addBody()" >
+                        <i style="color: #04B000" class="glyphicon glyphicon-plus"> </i>
+                      </a>
+                    </label>
+                    <div class="col-md-10" >
+                      <div class="col-sm-12 param-group" ng-repeat="field in currentItem.body" >
+                        <div class="col-md-3">
+                        <input class="form-control" type="text" ng-model="field.name" />
+                        <input class="form-control" type="text" ng-model="field.type" />
+                        </div>
+                        <div class="col-md-8">
+                        <textarea class="form-control" rows="2" cols="20" ng-model="field.description" >{{field.description}}</textarea>
+                        </div>
+                        <a href="#" class="" ng-click="removeBody(field)" >
+                          <i style="color: #d9534f" class="glyphicon glyphicon-minus pull-right"> </i>
+                        </a>
+                        <a class="pull-right arrow-up " href="" ng-click="reOrderArr(currentItem.body, field, -1); "><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a class="pull-right arrow-down " href="" ng-click="reOrderArr(currentItem.body, field, 1); "><i class="glyphicon glyphicon-arrow-down"></i></a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group ">
+                    <label class="control-label col-md-2" for="ib-query">
+                      Response
+                      <br />
+                      <a href="#" class="" ng-click="addResBody()" >
+                        <i style="color: #04B000" class="glyphicon glyphicon-plus"> </i>
+                      </a>
+                    </label>
+                    <div class="col-md-10" >
+                      <div class="col-sm-12 param-group" ng-repeat="field in currentItem.resBody" >
+                        <div class="col-md-3">
+                        <input class="form-control" type="text" ng-model="field.name" />
+                        <input class="form-control" type="text" ng-model="field.type" />
+                        </div>
+                        <div class="col-md-8">
+                        <textarea class="form-control" rows="2" cols="20" ng-model="field.description" >{{field.description}}</textarea>
+                        </div>
+                        <a href="#" class="" ng-click="removeResBody(field)" >
+                          <i style="color: #d9534f" class="glyphicon glyphicon-minus pull-right"> </i>
+                        </a>
+                        <a class="pull-right arrow-up " href="" ng-click="reOrderArr(currentItem.resBody, field, -1); "><i class="glyphicon glyphicon-arrow-up"></i></a>
+                        <a class="pull-right arrow-down " href="" ng-click="reOrderArr(currentItem.resBody, field, 1); "><i class="glyphicon glyphicon-arrow-down"></i></a>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group ">
+                    <label class="control-label col-md-2" for="ib-action">
+                      Example Req
+                    </label>
+                    <div class="col-md-10">
+                      <textarea ui-codemirror ui-codemirror-opts="editorOptions" class="form-control" ng-model="currentItem.exampleReq" >
+                        {{ currentItem.exampleReq }}
+                      </textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group ">
+                    <label class="control-label col-md-2" for="ib-action">
+                      Example Res
+                    </label>
+                    <div class="col-md-10">
+                      <textarea ui-codemirror ui-codemirror-opts="editorOptions" class="form-control" ng-model="currentItem.exampleRes" >
+                        {{ currentItem.exampleRes }}
+                      </textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-10">
+                      <button class="btn btn-primary " ng-click="save()" >
+                        Save
+                      </button>
+                      <button class="btn btn-success " ng-click="addApi()" >
+                        <i class="glyphicon glyphicon-plus" ></i>Add
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="height: 700px; overflow: auto;">
+        <div class="panel" ng-class="api.selected ? 'panel-info' : 'panel-default' " ng-repeat="api in apiData" >
+          <div class="panel-heading">
+            <a class="pull-left" href="" ng-click="setCurrentItem(api); "><i class="glyphicon glyphicon-pencil"></i>&nbsp; &nbsp;</a>
+            <a class="pull-right arrow-up " href="" ng-click="reOrderArr(apiData, api, -1); "><i class="glyphicon glyphicon-arrow-up"></i></a>
+            <a class="pull-right arrow-down " href="" ng-click="reOrderArr(apiData, api, 1); "><i class="glyphicon glyphicon-arrow-down"></i></a>
+            <a class="pull-right btn-close text-danger" href="" ng-click="removeItem(apiData, api); "><i class="glyphicon glyphicon-remove"></i></a>
+            <span href="" class="self-collapse" >
+              <h3 class="panel-title">
+                <strong>{{api.method}} </strong>
+                <span>{{api.action}}</span>
+              </h3>
+            </span>
+          </div>
+          <div class="panel-body collapse">
+            <p>
+            <div btf-markdown="api.description" > </div>
+            <div class="req-opts">
+              <h5>Query Params</h5>
+              <ul>
+                <li ng-repeat="param in api.query">
+                <b>{{param.name}}</b> : <code class=""><{{param.type}}></code>
+                <div btf-markdown="param.description" > </div>
+                </li>
+              </ul>
+            </div>
+            <div class="req-opts">
+              <h5>Body</h5>
+              <ul>
+                <li ng-repeat="param in api.body">
+                <b>{{param.name}}</b> : <code class=""><{{param.type}}></code>
+                <div btf-markdown="param.description" > </div>
+                </li>
+              </ul>
+            </div>
+            <div class="req-opts">
+              <h5>Response</h5>
+              <ul>
+                <li ng-repeat="param in api.resBody">
+                <b>{{param.name}}</b> : <code class=""><{{param.type}}></code>
+                <div btf-markdown="param.description" > </div>
+                </li>
+              </ul>
+            </div>
+            <div class="req-opts">
+              <h5>Example Req</h5>
+              <div class="code-preview" ui-codemirror  ui-codemirror-opts="codePreviewOpts" ng-model="api.exampleReq"></div>
+            </div>
+            <div class="req-opts">
+              <h5>Example Response</h5>
+              <div class="code-preview" ui-codemirror ui-codemirror-opts="codePreviewOpts" ng-model="api.exampleRes" ></div>
+            </div>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script>
+      window.$ = window.jQuery = require('jquery');
+    </script>
+    <script type="text/javascript" src="./bower_components/showdown/compressed/Showdown.min.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="./bower_components/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="./bower_components/codemirror/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-markdown-directive/markdown.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+    <script type="text/javascript" src="./bower_components/prism/prism.js"></script>
+    <script type="text/javascript" src="./assets/js/app.js"></script>
+  </body>
+</html>

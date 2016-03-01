@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+"use strict";
+
+var electronPath = require('electron-prebuilt');
+
+var args = [ __dirname + '/../'].concat( process.argv.slice(2) );
+
+require('child_process').execFileSync( electronPath, args, { stdio: 'inherit' });
+
+
+

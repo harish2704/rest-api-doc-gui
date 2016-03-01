@@ -1,0 +1,33 @@
+{
+  "name": "rest-api-doc-gui",
+  "version": "1.0.0",
+  "description": "A GUI for creating REST API documentation Easily.",
+  "main": "main.js",
+  "dependencies": {
+    "electron-prebuilt": "^0.36.9",
+    "jquery": "^2.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "rest-api-doc-gui": "./bin/cli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harish2704/rest-api-doc-gui.git"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "documentation",
+    "generator"
+  ],
+  "author": "Harish.K <harish2704@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/harish2704/rest-api-doc-gui/issues"
+  },
+  "homepage": "https://github.com/harish2704/rest-api-doc-gui#readme"
+}
