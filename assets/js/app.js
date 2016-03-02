@@ -11,12 +11,11 @@ var MyApp = angular.module( 'MyApp', [
       // options to be passed to Showdown
       // see: https://github.com/coreyti/showdown#extensions
       markdownConverterProvider.config({
-        tables: true,
-        // extensions: ['twitter']
+        extensions: ['github', 'table']
       });
     }]);
 
-var API_METHODS = ['GET', 'POST'];
+var API_METHODS = ['GET', 'POST', 'PUT', 'DELETE' ];
 
 
 function Api(data){
