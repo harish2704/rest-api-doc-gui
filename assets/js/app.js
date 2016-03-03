@@ -73,7 +73,7 @@ MyApp.controller( 'MainCtrl', ['$scope', function( $scope ){
 
   $scope.save = function(){
     console.log('Saving data...');
-    ipc.send('writeFile', angular.copy( $scope.apiData ) );
+    ipc.send('writeFile', angular.copy( $scope.apiData ).map( function(v){ delete v.selected; return v; }) );
   };
 
   $scope.addApi = function(){
