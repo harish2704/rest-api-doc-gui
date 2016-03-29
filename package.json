@@ -1,6 +1,6 @@
 {
   "name": "rest-api-doc-gui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A GUI for creating REST API documentation Easily.",
   "main": "main.js",
   "dependencies": {
