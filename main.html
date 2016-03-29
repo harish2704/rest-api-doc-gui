@@ -213,30 +213,60 @@
             <div btf-markdown="api.description" > </div>
             <div class="req-opts">
               <h5>Query Params</h5>
-              <ul>
-                <li ng-repeat="param in api.query">
-                <b>{{param.name}}</b> : <code class=""><{{param.type}}></code>
-                <div btf-markdown="param.description" > </div>
-                </li>
-              </ul>
+              <table ng-show="api.query.length" >
+                <thead>
+                  <tr>
+                    <td>Parameter</td>
+                    <td>Type</td>
+                    <td>Description</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="param in api.query">
+                    <td>{{param.name}}</td>
+                    <td> <code class=""><{{param.type}}></code> </td>
+                    <td> <div btf-markdown="param.description" > </div> </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="req-opts">
               <h5>Body</h5>
-              <ul>
-                <li ng-repeat="param in api.body">
-                <b>{{param.name}}</b> : <code class=""><{{param.type}}></code>
-                <div btf-markdown="param.description" > </div>
-                </li>
-              </ul>
+              <table>
+                <thead ng-show="api.body.length" >
+                  <tr>
+                    <td>Parameter</td>
+                    <td>Type</td>
+                    <td>Description</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="param in api.body">
+                    <td>{{param.name}}</td>
+                    <td> <code class=""><{{param.type}}></code> </td>
+                    <td> <div btf-markdown="param.description" > </div> </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="req-opts">
+            <div class="req-opts" >
               <h5>Response</h5>
-              <ul>
-                <li ng-repeat="param in api.resBody">
-                <b>{{param.name}}</b> : <code class=""><{{param.type}}></code>
-                <div btf-markdown="param.description" > </div>
-                </li>
-              </ul>
+              <table ng-show="api.resBody.length" >
+                <thead>
+                  <tr>
+                    <td>Parameter</td>
+                    <td>Type</td>
+                    <td>Description</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="param in api.resBody">
+                    <td>{{param.name}}</td>
+                    <td> <code class=""><{{param.type}}></code> </td>
+                    <td> <div btf-markdown="param.description" > </div> </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="req-opts">
               <h5>Example Req</h5>
@@ -260,7 +290,9 @@
     <script>
       window.$ = window.jQuery = require('jquery');
     </script>
-    <script type="text/javascript" src="./bower_components/showdown/compressed/Showdown.min.js"></script>
+    <script type="text/javascript" src="./bower_components/showdown/src/showdown.js"></script>
+    <script type="text/javascript" src="./bower_components/showdown/src/extensions/table.js"></script>
+    <script type="text/javascript" src="./bower_components/showdown/src/extensions/github.js"></script>
     <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="./bower_components/codemirror/lib/codemirror.js"></script>
     <script type="text/javascript" src="./bower_components/codemirror/mode/javascript/javascript.js"></script>

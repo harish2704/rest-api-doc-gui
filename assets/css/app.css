@@ -35,6 +35,7 @@ table thead {
 table thead tr th, table tfoot tr th, table tfoot tr td, table tbody tr th, table tbody tr td, table tr td {
   display: table-cell;
   line-height: 1.125rem;
+  vertical-align: top;
 }
 th, table thead tr td {
   color: #222;
