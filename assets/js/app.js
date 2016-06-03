@@ -132,7 +132,7 @@ MyApp.controller( 'MainCtrl', ['$scope', function( $scope ){
     return;
   };
 
-  $scope.removeItem = function( arr, item ){
+  $scope.removeApi = function( arr, item ){
     var index = arr.indexOf( item );
     if( index < 0 ){
       return;
