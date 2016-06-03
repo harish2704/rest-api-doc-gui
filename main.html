@@ -12,10 +12,12 @@
     <title>Api Documentation</title>
 
 
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/monokai.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/prism/themes/prism-solarizedlight.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/codemirror/theme/monokai.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/prism/themes/prism-solarizedlight.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/ng-sortable/dist/ng-sortable.min.css">
+    <link rel="stylesheet" type="text/css" href="./bower_components/ng-sortable/dist/ng-sortable.style.min.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/app.css">
   </head>
 
@@ -195,90 +197,93 @@
       </div>
 
       <div class="col-md-6" style="height: 700px; overflow: auto;">
-        <div class="panel" ng-class="api.selected ? 'panel-info' : 'panel-default' " ng-repeat="api in apiData" >
-          <div class="panel-heading">
-            <a class="pull-left" href="" ng-click="setCurrentItem(api); "><i class="glyphicon glyphicon-pencil"></i>&nbsp; &nbsp;</a>
-            <a class="pull-right arrow-up " href="" ng-click="reOrderArr(apiData, api, -1); "><i class="glyphicon glyphicon-arrow-up"></i></a>
-            <a class="pull-right arrow-down " href="" ng-click="reOrderArr(apiData, api, 1); "><i class="glyphicon glyphicon-arrow-down"></i></a>
-            <a class="pull-right btn-close text-danger" href="" ng-click="removeItem(apiData, api); "><i class="glyphicon glyphicon-remove"></i></a>
-            <span href="" class="self-collapse" >
-              <h3 class="panel-title">
-                <strong>{{api.method}} </strong>
-                <span>{{api.action}}</span>
-              </h3>
-            </span>
-          </div>
-          <div class="panel-body collapse">
-            <p>
-            <div btf-markdown="api.description" > </div>
-            <div class="req-opts">
-              <h5>Query Params</h5>
-              <table ng-show="api.query.length" >
-                <thead>
-                  <tr>
-                    <td>Parameter</td>
-                    <td>Type</td>
-                    <td>Description</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="param in api.query">
-                    <td>{{param.name}}</td>
-                    <td> <code class=""><{{param.type}}></code> </td>
-                    <td> <div btf-markdown="param.description" > </div> </td>
-                  </tr>
-                </tbody>
-              </table>
+        <ul as-sortable ng-model="apiData" class="list-group">
+          <li ng-repeat="api in apiData" as-sortable-item class="list-group-item" >
+            <div class="panel" ng-class="api.selected ? 'panel-info' : 'panel-default' " >
+              <div class="panel-heading">
+                <a class="pull-left" href="" ng-click="setCurrentItem(api); "><i class="glyphicon glyphicon-pencil"></i>&nbsp; &nbsp;</a>
+                <a class="pull-right" as-sortable-item-handle ><i class="glyphicon glyphicon-move"></i></a>
+                <a class="pull-right btn-close text-danger" href="" ng-click="removeItem(apiData, api); "><i class="glyphicon glyphicon-remove"></i></a>
+                <span href="" class="self-collapse" >
+                  <h3 class="panel-title">
+                    <strong>{{api.method}} </strong>
+                    <span>{{api.action}}</span>
+                  </h3>
+                </span>
+              </div>
+              <div class="panel-body collapse">
+                <p>
+                <div btf-markdown="api.description" > </div>
+                <div class="req-opts">
+                  <h5>Query Params</h5>
+                  <table ng-show="api.query.length" >
+                    <thead>
+                      <tr>
+                        <td>Parameter</td>
+                        <td>Type</td>
+                        <td>Description</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="param in api.query">
+                        <td>{{param.name}}</td>
+                        <td> <code class=""><{{param.type}}></code> </td>
+                        <td> <div btf-markdown="param.description" > </div> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="req-opts">
+                  <h5>Body</h5>
+                  <table>
+                    <thead ng-show="api.body.length" >
+                      <tr>
+                        <td>Parameter</td>
+                        <td>Type</td>
+                        <td>Description</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="param in api.body">
+                        <td>{{param.name}}</td>
+                        <td> <code class=""><{{param.type}}></code> </td>
+                        <td> <div btf-markdown="param.description" > </div> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="req-opts" >
+                  <h5>Response</h5>
+                  <table ng-show="api.resBody.length" >
+                    <thead>
+                      <tr>
+                        <td>Parameter</td>
+                        <td>Type</td>
+                        <td>Description</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="param in api.resBody">
+                        <td>{{param.name}}</td>
+                        <td> <code class=""><{{param.type}}></code> </td>
+                        <td> <div btf-markdown="param.description" > </div> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="req-opts">
+                  <h5>Example Req</h5>
+                  <div class="code-preview" ui-codemirror  ui-codemirror-opts="codePreviewOpts" ng-model="api.exampleReq"></div>
+                </div>
+                <div class="req-opts">
+                  <h5>Example Response</h5>
+                  <div class="code-preview" ui-codemirror ui-codemirror-opts="codePreviewOpts" ng-model="api.exampleRes" ></div>
+                </div>
+                </p>
+              </div>
             </div>
-            <div class="req-opts">
-              <h5>Body</h5>
-              <table>
-                <thead ng-show="api.body.length" >
-                  <tr>
-                    <td>Parameter</td>
-                    <td>Type</td>
-                    <td>Description</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="param in api.body">
-                    <td>{{param.name}}</td>
-                    <td> <code class=""><{{param.type}}></code> </td>
-                    <td> <div btf-markdown="param.description" > </div> </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="req-opts" >
-              <h5>Response</h5>
-              <table ng-show="api.resBody.length" >
-                <thead>
-                  <tr>
-                    <td>Parameter</td>
-                    <td>Type</td>
-                    <td>Description</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="param in api.resBody">
-                    <td>{{param.name}}</td>
-                    <td> <code class=""><{{param.type}}></code> </td>
-                    <td> <div btf-markdown="param.description" > </div> </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="req-opts">
-              <h5>Example Req</h5>
-              <div class="code-preview" ui-codemirror  ui-codemirror-opts="codePreviewOpts" ng-model="api.exampleReq"></div>
-            </div>
-            <div class="req-opts">
-              <h5>Example Response</h5>
-              <div class="code-preview" ui-codemirror ui-codemirror-opts="codePreviewOpts" ng-model="api.exampleRes" ></div>
-            </div>
-            </p>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
 
     </div> <!-- /container -->
@@ -300,6 +305,7 @@
     <script type="text/javascript" src="./bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="./bower_components/angular-markdown-directive/markdown.js"></script>
     <script type="text/javascript" src="./bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+    <script type="text/javascript" src="./bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
     <script type="text/javascript" src="./bower_components/prism/prism.js"></script>
     <script type="text/javascript" src="./assets/js/app.js"></script>
   </body>

@@ -6,6 +6,7 @@ var ipc = require('electron').ipcRenderer;
 var MyApp = angular.module( 'MyApp', [ 
     'btford.markdown',
     'ui.codemirror',
+    'as.sortable',
     ] )
     .config(['markdownConverterProvider', function (markdownConverterProvider) {
       // options to be passed to Showdown
@@ -139,6 +140,9 @@ MyApp.controller( 'MainCtrl', ['$scope', function( $scope ){
     arr.splice( index, 1 );
   };
 
+  $scope.dragControlListeners = {
+
+  }
 
   if(  $scope.apiData[0] ){
     $scope.setCurrentItem(  $scope.apiData[0] );
